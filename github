@@ -9,7 +9,6 @@ test -d $tmpdir || mkdir $tmpdir
 cleanup() { rm -rf $tmpdir; }
 die() { echo "$@"; exit 1; }
 trap cleanup EXIT
-
 set -x
 
 repo_init() {
@@ -30,7 +29,6 @@ repo_init() {
 		git init 
 		git add *
 		git commit -m initial -a
-		git remote add origin $repo
 		git push -u origin master
 	)
 	exit 0
@@ -41,8 +39,9 @@ repo_push() {
 	repo=$( repo_find $PWD )
 	root=$( root_find $PWD )
 	rel=${PWD##$root}
+	[[ ${#PWD} -lt ${#root} ]] && rel=""
 
-	git clone $repo $tmpdir
+	git clone -q $repo $tmpdir
 	git_add=""
 	[[ ! -e ${tmpdir}/${rel}/${dirent} ]] && git_add=1
 	cp $dirent ${tmpdir}/${rel}/.
