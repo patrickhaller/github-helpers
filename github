@@ -9,7 +9,6 @@ test -d $tmpdir || mkdir $tmpdir
 cleanup() { rm -rf $tmpdir; }
 die() { echo "$@"; exit 1; }
 trap cleanup EXIT
-set -x
 
 repo_init() {
 	dirent="$1"
@@ -49,7 +48,7 @@ repo_push() {
 		cd $tmpdir
 		[[ "$git_add" != "" ]] && git add ${rel}/${dirent}
 		git commit -m 'trivial change' -a
-		git push origin master
+		git push -q origin master
 	)
 }
 
