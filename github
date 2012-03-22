@@ -38,7 +38,7 @@ repo_push() {
 	repo=$( repo_find $PWD )
 	root=$( root_find $PWD )
 	rel=${PWD##$root}
-	[[ ${#PWD} -lt ${#root} ]] && rel=""
+	[[ ${#PWD} -lt ${#root} ]] && rel="."
 
 	git clone -q $repo $tmpdir
 	git_add=""
