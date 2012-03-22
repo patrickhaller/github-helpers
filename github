@@ -1,4 +1,6 @@
 #!/bin/bash
+# for when you have a sub-part of a repo that you want to publish to github
+# but you don't want to submodule it
 repo_cfg="${HOME}/.github"
 repo_find() { grep "$1" $repo_cfg | awk '{ print $2 }'; }
 root_find() { grep "$1" $repo_cfg | awk '{ print $1 }'; }
