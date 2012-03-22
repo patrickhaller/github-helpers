@@ -43,7 +43,7 @@ repo_push() {
 	git clone -q $repo $tmpdir
 	git_add=""
 	[[ ! -e ${tmpdir}/${rel}/${dirent} ]] && git_add=1
-	cp $dirent ${tmpdir}/${rel}/.
+	cp -r $dirent ${tmpdir}/${rel}/.
 	( 
 		cd $tmpdir
 		[[ "$git_add" != "" ]] && git add ${rel}/${dirent}
