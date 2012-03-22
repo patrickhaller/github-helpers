@@ -41,12 +41,10 @@ repo_push() {
 	[[ ${#PWD} -lt ${#root} ]] && rel="."
 
 	git clone -q $repo $tmpdir
-	git_add=""
-	[[ ! -e ${tmpdir}/${rel}/${dirent} ]] && git_add=1
 	cp -r $dirent ${tmpdir}/${rel}/.
 	( 
 		cd $tmpdir
-		[[ "$git_add" != "" ]] && git add ${rel}/${dirent}
+		git add .
 		git commit -m 'trivial change' -a
 		git push -q origin master
 	)
