@@ -6,15 +6,15 @@ repo_find() { grep "$1" $repo_cfg | awk '{ print $2 }'; }
 root_find() { grep "$1" $repo_cfg | awk '{ print $1 }'; }
 repo_add() { echo "${1} ${2}" >> $repo_cfg; }
 
-tmpdir="/tmp/github-$$"
+tmpdir="${HOME}/tmp/git-repos"
 test -d $tmpdir || mkdir $tmpdir
-cleanup() { rm -rf $tmpdir; }
 die() { echo "$@"; exit 1; }
-trap cleanup EXIT
 
 repo_init() {
 	dirent="$1"
 	repo="$2"
+
+	tmpdir="${tmpdir}$(basename $dirent)"
 
 	grep -qs $repo $repo_cfg && { 
 		die "repo already exists: $repo"
@@ -42,7 +42,9 @@ repo_push() {
 	rel=${PWD##$root}
 	[[ ${#PWD} -lt ${#root} ]] && rel="."
 
-	git clone -q $repo $tmpdir
+	tmpdir="${tmpdir}$(basename $dirent)"
+
+	[[ -d $tmpdir ]] || git clone -q $repo $tmpdir
 	cp -r $dirent ${tmpdir}/${rel}/.
 	( 
 		cd $tmpdir
