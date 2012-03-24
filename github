@@ -65,6 +65,6 @@ To pull from the repo
 EOF
 }
 
-[[ -e "$1" && "$2" != "" ]] && repo_init $1 $2
-
-[[ $1 = "push" && -e "$2" ]] && repo_push $2
+[[ -e "$1" && "$2" != "" ]] && { repo_init $1 $2 ; exit 0; }
+[[ -e "$1" ]] && { repo_push $1; exit 0; }
+echo "lol. wut?"
